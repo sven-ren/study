@@ -183,7 +183,7 @@ function myBullet(imagesrc, speed){
         oMain.appendChild(this.myBulletNodes);
     }
 }
-var ourBullet=new myBullet("images/basketball.png",2);
+var ourBullet=new myBullet("images/bullet.png",2);
 var ourBulletArray=new Array();
 /*-----------------------遍历小飞机数组，让每个小飞机向下移动--------------*/
 var littlePlaneMoveDown1;
@@ -349,7 +349,7 @@ function bossPlaneCreate(){
 var ourBulletCreate1;
 function ourBulletCreate(){
     if(flag4==true){
-        var ourBullet=new myBullet("images/basketball.png",2);
+        var ourBullet=new myBullet("images/bullet.png",2);
         if(ourBullet.state==true){
             ourBullet.create();
             ourBulletArray.push(ourBullet);
@@ -535,7 +535,7 @@ function userKey() {
     }
     if(keyValue==90&&plane.alive==true){
         //按下z键先立即发射一发子弹
-        var ourBullet=new myBullet("images/basketball.png",2);
+        var ourBullet=new myBullet("images/bullet.png",2);
         if(ourBullet.state==true){
             ourBullet.create();
             ourBulletArray.push(ourBullet);
