@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        body{
+            background-image: url(images/startbg.jpg);
+            background-size: cover;
+        }
+        img{
+            display: none;
+        }
+        #mycanvas{
+            cursor: url("images/C/1.ani"),default;
+        }
+    </style>
+</head>
+<body>
+<canvas id="mycanvas" width="1910" height="950"></canvas>
+
+<img src="images/fish1.png"/>
+<img src="images/fish2.png"/>
+<img src="images/fish3.png"/>
+<img src="images/fish4.png"/>
+<img src="images/fish5.png"/>
+<img src="images/fish6.png"/>
+<img src="images/fish7.png"/>
+<img src="images/fish8.png"/>
+<img src="images/fish9.png"/>
+<img src="images/fish10.png"/>
+<img src="images/shark1.png"/>
+<img src="images/shark2.png"/>
+
+<img src="images/fish1-m.png"/>
+<img src="images/fish2-m.png"/>
+<img src="images/fish3-m.png"/>
+<img src="images/fish4-m.png"/>
+<img src="images/fish5-m.png"/>
+<img src="images/fish6-m.png"/>
+<img src="images/fish7-m.png"/>
+<img src="images/fish8-m.png"/>
+<img src="images/fish9-m.png"/>
+<img src="images/fish10-m.png"/>
+<img src="images/shark1-m.png"/>
+<img src="images/shark2-m.png"/>
+
+<img src="images/bottom-bar.png" id="bottom"/>
+<img src="images/cannon1.png" id="cannon1"/>
+<img src="images/bullet1.png" id="bullet1"/>
+<img src="images/web1.png" id="web1"/>
+<img src="images/coinText.png" id="number"/>
+<img src="images/coinAni1.png" id="silvercoin"/>
+<img src="images/coinAni2.png" id="goldencoin"/>
+</body>
+<script>
+    var mycanvas=document.getElementById("mycanvas");
+    var ctx = document.getElementById("mycanvas").getContext("2d");
+    var fish=document.getElementsByTagName('img');
+    var bottom=document.getElementById("bottom");
+    var cannon1=document.getElementById('cannon1');
+    var bullet1=document.getElementById("bullet1");
+    var web1=document.getElementById("web1");
+    var number=document.getElementById("number");
+    var silvercoin=document.getElementById("silvercoin");
+    var goldencoin=document.getElementById("goldencoin");
+    var fishArray = [];
+    var bulletArray=[];
+    var numberArray=[];
+    var timer=5;
+    var timer1=10;
+    var k;
+    var J;
+    var X;
+    var Y;
+    var cannon1Y=0;
+    mycanvas.addEventListener("mousemove",mouseMove);
+    mycanvas.addEventListener("click",shoot);
+    window.onload=function(){
+        setInterval(createFish,1000);
+        setInterval(fishMove,100);
+    };
+    function createFish(){
+        var fishtype=Math.round(Math.random()*23);
+        var fishWidth,fishHeight,imageHeight,aliveHeight,drawY,drawX,Speed,Flag;
+        var shark=Math.round(Math.random()*100);
+        function $(fishwidth,fishheight,imageheight,aliveheight,drawx,speed,flag){
+            fishWidth=fishwidth;
+            fishHeight=fishheight;
+            imageHeight=imageheight;
+            aliveHeight=aliveheight;
+            drawY=900-fishheight;
+            drawX=drawx;
+            Speed=speed;
+            Flag=flag;
+        }
+        if(fishtype==0){
+            $(55,37,296,148,-550,20)
+        }else if(fishtype==1){
+            $(78,64,512,256,-550,18,20)
+        }else if(fishtype==2){
+            $(72,56,448,224,-550,16,20)
+        }else if(fishtype==3){
+            $(77,59,472,236,-550,14,30)
+        }else if(fishtype==4){
+            $(107,122,976,488,-550,12,30)
+        }else if(fishtype==5){
+            $(105,79,948,761,-550,10,20,30)
+        }else if(fishtype==6){
+            $(92,151,1510,906,-550,8,60)
+        }else if(fishtype==7){
+            $(174,126,1512,1088,-550,6,30)
+        }else if(fishtype==8){
+            $(166,183,2196,1464,-550,4,50)
+        }else if(fishtype==9){
+            $(178,187,1870,1122,-550,4,50)
+        }else if(fishtype==10){
+            if(shark==3){
+                $(509,270,3240,2160,-550,2,30)
+            }
+        }else if(fishtype==11){
+            if(shark==2){
+                $(516,273,3276,2184,-550,2,30)
+            }
+        }else if(fishtype==12){
+            $(55,37,296,148,2400,-20)
+        }else if(fishtype==13){
+            $(78,64,512,256,2400,-18,20)
+        }else if(fishtype==14){
+            $(72,56,448,224,2400,-16,20)
+        }else if(fishtype==15){
+            $(77,59,472,236,2400,-14,30)
+        }else if(fishtype==16){
+            $(107,122,976,488,2400,-12,30)
+        }else if(fishtype==17){
+            $(105,79,948,761,2400,-10,20)
+        }else if(fishtype==18){
+            $(92,151,1510,906,2400,-8,60)
+        }else if(fishtype==19){
+            $(174,126,1512,1088,2400,-6,30)
+        }else if(fishtype==20){
+            $(166,183,2196,1464,2400,-4,50)
+        }else if(fishtype==21){
+            $(178,187,1870,1122,2400,-4,50)
+        }else if(fishtype==22){
+            if(shark==4){
+                $(509,270,3240,2160,2400,-2,30)
+            }
+        }else if(fishtype==23){
+            if(shark==5){
+                $(516,273,3276,2184,2400,-2,30)
+            }
+        }
+        var newFish = new fishPrototype(ctx,fish[fishtype],0,0,fishWidth,fishHeight,drawX,Math.random()*drawY,imageHeight,aliveHeight,Speed,Flag);
+        fishArray.push(newFish)
+    }
+
+    function fishMove(){
+        ctx.clearRect(0,0,1910,950);
+        for(var i=0;i<fishArray.length;i++){
+            fishArray[i].drawMyself();
+            for(var j=0;j<bulletArray.length;j++){
+                if(fishArray[i].ctx.isPointInPath(bulletArray[j].X,bulletArray[j].Y)){
+                    if(fishArray[i].cutW>0&&fishArray[i].cutW<100){
+                        fishArray[i].isDead=true;
+                        fishArray[i].speed=0;
+                        fishArray[i].imageNode=silvercoin;
+                        fishArray[i].cutX=0;
+                        fishArray[i].cutY=0;
+                        fishArray[i].cutW=60;
+                        fishArray[i].cutH=60;
+                    }
+                    if(fishArray[i].cutW>100&&fishArray[i].cutW<150){
+                        var num1=parseInt(Math.random()*5);
+                        if(num1==1){
+                            fishArray[i].isDead=true;
+                            fishArray[i].speed=0;
+                            fishArray[i].imageNode=silvercoin;
+                            fishArray[i].cutX=0;
+                            fishArray[i].cutY=0;
+                            fishArray[i].cutW=60;
+                            fishArray[i].cutY=60;
+                        }
+                    }
+                    if(fishArray[i].cutW>150&&fishArray[i].cutW<200){
+                        var num2=parseInt(Math.random()*8);
+                        if(num2==1){
+                            fishArray[i].isDead=true;
+                            fishArray[i].speed=0;
+                            fishArray[i].imageNode=silvercoin;
+                            fishArray[i].cutX=0;
+                            fishArray[i].cutY=0;
+                            fishArray[i].cutW=60;
+                            fishArray[i].cutY=60;
+                        }
+                    }
+                    if(fishArray[i].cutW>200){
+                        var num4=parseInt(Math.random()*15);
+                        if(num4==1){
+                            fishArray[i].isDead=true;
+                            fishArray[i].speed=0;
+                            fishArray[i].imageNode=silvercoin;
+                            fishArray[i].cutX=0;
+                            fishArray[i].cutY=0;
+                            fishArray[i].cutW=60;
+                            fishArray[i].cutY=60;
+                        }
+                    }
+                    bulletArray[j].imageNode=web1;
+                    bulletArray[j].speed=0;
+                    bulletArray[j].cutW=116;
+                    bulletArray[j].cutH=118;
+                    bulletArray[j].drawX=-58;
+                }
+            }
+        }
+        bulletMove();
+        ctx.save();
+        ctx.beginPath();
+        ctx.drawImage(bottom,523,878,765,72);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.translate(950,920);
+        ctx.rotate(k);
+        if(cannon1Y==0){
+            ctx.drawImage(cannon1,0,cannon1Y,74,74,-37,-40,74,74);
+        }
+        if(cannon1Y>0&&cannon1Y<370){
+            cannon1Y+=74;
+            ctx.drawImage(cannon1,0,cannon1Y,74,74,-37,-40,74,74);
+        }
+        if(cannon1Y==370){
+            cannon1Y=0;
+            ctx.drawImage(cannon1,0,cannon1Y,74,74,-37,-40,74,74);
+        }
+        ctx.stroke();
+        ctx.restore();
+    }
+    function createbullet(){
+        var bulletY=Math.sqrt((X-950)*(X-950)+(Y-920)*(Y-920))-60;
+        var newbullet = new bulletPrototype(ctx,bullet1,0,0,24,26,-12,bulletY,100,50,X,Y,J);
+        bulletArray.push(newbullet)
+    }
+    function bulletMove(){
+        for(var j=0;j<bulletArray.length;j++){
+            bulletArray[j].drawMyself();
+        }
+    }
+    /*-------------------------------------鱼类----------------------------------------------*/
+    function fishPrototype(ctx,imgNode,cutX,cutY,cutW,cutH,drawX,drawY,imgH,imgAliveH,speed,flag){
+        this.ctx = ctx;
+        this.imageNode = imgNode;
+        this.cutX = cutX;
+        this.cutY = cutY;
+        this.cutW = cutW;
+        this.cutH = cutH;
+        this.drawX = drawX;
+        this.drawY = drawY;
+        this.speed=speed;
+        this.imgH = imgH;
+        this.imgAliveH = imgAliveH;
+        this.isDead = false;
+        this.timer1=10;
+        this.move=function(){
+            this.drawX+=this.speed;
+        };
+        this.drawMyself= function(){
+            this.ctx.beginPath();
+            this.ctx.drawImage(this.imageNode,this.cutX,this.cutY,this.cutW,this.cutH,this.drawX,this.drawY,this.cutW,this.cutH);
+            this.ctx.stroke();
+            this.ctx.beginPath();
+            if(this.cutY<this.imgH){
+                this.ctx.rect(this.drawX,this.drawY,this.cutW,this.cutH-flag);
+            }
+
+//            this.ctx.stroke();
+            this.cutY+=this.cutH;
+            if(this.cutY>=this.imgAliveH&&this.isDead==false){
+                this.cutY=0;
+            }
+//            if(this.cutY>=this.imgH){
+//                this.cutW=0;
+//                this.cutH=flag;
+//                this.imageNode=coin;
+//                this.cutX=0;
+//                this.cutY=0;
+//                this.cutW=60;
+//                this.cutH=60;
+//                var numberX=this.drawX,numberY=this.drawY;
+//                var numbercutX;
+//                if(this.cutW==55){
+//                    numbercutX=36
+//                }else if(this.cutW==78){
+//                    numbercutX=72
+//                }else if(this.cutW==72){
+//                    numbercutX=108
+//                }else if(this.cutW==77){
+//                    numbercutX=144
+//                }else if(this.cutW==107){
+//                    numbercutX=180
+//                }else if(this.cutW==105){
+//                    numbercutX=216
+//                }else if(this.cutW==92){
+//                    numbercutX=252
+//                }else if(this.cutW==174){
+//                    numbercutX=288
+//                }else if(this.cutW==166){
+//                    numbercutX=324
+//                }else if(this.cutW==178){
+//                    numbercutX=360
+//                }
+//                var score=new numberPrototype(ctx,number,numbercutX,0,36,49,numberX,numberY);
+//                numberArray.push(score);
+//                for(var i=0;i<numberArray.length;i++){
+//                    if(numberArray[i].timer1<=0){
+//                        numberArray[i].cutW=0;
+//                        numberArray[i].cutH=0;
+//                    }
+//                    numberArray[i].drawMyself();
+//                }
+
+//            }
+            this.move();
+        };
+    }
+    /*------------------------------------子弹类--------------------------------------------*/
+    function bulletPrototype(ctx,imgNode,cutX,cutY,cutW,cutH,drawX,drawY,imgAliveH,speed,x,y,deg){
+        this.ctx = ctx;
+        this.imageNode = imgNode;
+        this.cutX = cutX;
+        this.cutY = cutY;
+        this.cutW = cutW;
+        this.cutH = cutH;
+        this.drawX = drawX;
+        this.drawY = drawY;
+        this.speed=speed;
+        this.imgAliveH = imgAliveH;
+        this.isDead = false;
+        this.time=0;
+        this.X=0;
+        this.Y=0;
+        this.move=function(){
+            this.drawY-=this.speed;
+            this.time++;
+            if(J>0){
+                this.X=955+(this.speed*this.time)*Math.sin(J);
+                this.Y=920-(this.speed*this.time)*Math.cos(J);
+            }else if(J<0){
+                this.X=955+(this.speed*this.time)*Math.sin(J);
+                this.Y=920-(this.speed*this.time)*Math.cos(J);
+            }
+        };
+        this.drawMyself= function(){
+            this.ctx.save();
+            this.ctx.beginPath();
+            this.ctx.translate(x,y);
+            this.ctx.rotate(deg);
+            this.ctx.drawImage(this.imageNode,this.cutX,this.cutY,this.cutW,this.cutH,this.drawX,this.drawY,this.cutW,this.cutH);
+            this.ctx.stroke();
+            this.ctx.restore();
+            this.move();
+            if(this.cutW==116){
+                timer--;
+            }
+            if(timer==0){
+                this.cutW=0;
+                this.cutH=0;
+                var numberX=this.drawX,numberY=this.drawY;
+//                var numbercutX;
+                var score=new numberPrototype(ctx,number,36,0,36,49,numberX,numberY);
+                numberArray.push(score);
+                for(var i=0;i<numberArray.length;i++){
+                    if(numberArray[i].timer1<=0){
+                        numberArray[i].cutW=0;
+                        numberArray[i].cutH=0;
+                    }
+                    numberArray[i].drawMyself();
+                }
+                timer=5;
+            }
+        };
+    }
+    /*-------------------------------------得分类---------------------------------------*/
+    function numberPrototype(ctx,imgNode,cutX,cutY,cutW,cutH,drawX,drawY){
+        this.ctx = ctx;
+        this.imageNode = imgNode;
+        this.cutX = cutX;
+        this.cutY = cutY;
+        this.cutW = cutW;
+        this.cutH = cutH;
+        this.drawX = drawX;
+        this.drawY = drawY;
+        this.speed=1;
+        this.timer1=10;
+        this.move=function(){
+            this.drawY-=this.speed;
+        };
+        this.drawMyself= function(){
+            this.ctx.save();
+            this.ctx.beginPath();
+            this.ctx.drawImage(this.imageNode,this.cutX,this.cutY,this.cutW,this.cutH,this.drawX,this.drawY,this.cutW,this.cutH);
+            this.ctx.stroke();
+            this.ctx.restore();
+            this.move();
+            this.timer1--;
+        };
+    }
+    function mousePosition(event1){
+        return {mouseX: event1.offsetX,mouseY: event1.offsetY};
+    }
+    function mousePosition1(evt1){
+        return{mouseX: evt1.offsetX,mouseY: evt1.offsetY}
+    }
+    function mouseMove(event2){
+        var pos=mousePosition(event2);
+        var x=pos.mouseX,y=pos.mouseY;
+        var X1=x-950,Y1=920-y;
+        k = Math.atan(X1/Y1);
+    }
+    function shoot(evt2){
+        var x=mousePosition1(evt2).mouseX;
+        var y=mousePosition1(evt2).mouseY;
+        var X1=x-950,Y1=920-y;
+        J = Math.atan(X1/Y1);
+        X=x;
+        Y=y;
+        createbullet();
+        cannon1Y=74;
+    }
+</script>
+</html>
