@@ -1,0 +1,109 @@
+#main{
+    background-image: url('./material/map/bg_hei_0.jpg');
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-size: contain;
+    width: 440px;
+    height: 660px;
+}
+.music{
+    position: absolute;
+    top: 660px;
+}
+.normal_enemy_boom{
+    background-image: url("./material/CloverAssets/effect/boom04.png");
+    background-repeat: no-repeat;
+    background-position: -140px 0;
+    background-size: 400px;
+    width: 72px;
+    height: 82px;
+}
+.middle_enemy_boom{
+    background-image: url("./material/CloverAssets/effect/boom04.png");
+    background-repeat: no-repeat;
+    background-position: -120px -86px;
+    background-size: 400px;
+    width: 72px;
+    height: 82px;
+}
+.enemy_boss_boom{
+    background-image: url("./material/CloverAssets/effect/boom04.png");
+    background-repeat: no-repeat;
+    background-position: 0 -120px;
+    background-size: 600px;
+    width: 150px;
+    height: 139px;
+}
+.myPlane {
+    background-image: url("./material/CloverAssets/plane/p-02a.png");
+    background-repeat: no-repeat;
+    background-position: -18px -13px;
+    background-size: 400px;
+    width: 64px;
+    height: 66px;
+}
+.myBullet{
+    background-image: url("./material/CloverAssets/plane/p-02a.png");
+    background-repeat: no-repeat;
+    background-position: -316px -101px;
+    background-size: 400px;
+    width: 21px;
+    height: 47px;
+}
+.enemy_normal_1{
+    background-image: url("./material/CloverAssets/enemy/c-04.png");
+    background-repeat: no-repeat;
+    background-position: contain;
+    background-size: 72px;
+    width: 72px;
+    height: 82px;
+}
+.enemy_normal_2{
+    background-image: url("./material/CloverAssets/enemy/c-04b.png");
+    background-repeat: no-repeat;
+    background-position: contain;
+    background-size: 72px;
+    width: 72px;
+    height: 82px;
+}
+.enemy_normal_3{
+    background-image: url("./material/CloverAssets/enemy/c-01.png");
+    background-repeat: no-repeat;
+    background-position: contain;
+    background-size: 73px;
+    width: 73px;
+    height: 78px;
+}
+.enemy_normal_4{
+    background-image: url("./material/CloverAssets/enemy/c-01b.png");
+    background-repeat: no-repeat;
+    background-position: contain;
+    background-size: 73px;
+    width: 73px;
+    height: 78px;
+}
+.enemy_middle_1{
+    background-image: url("./material/CloverAssets/enemy/a-01.png");
+    background-repeat: no-repeat;
+    background-position: contain;
+    background-size: 100px;
+    width: 100px;
+    height: 133px;
+}
+.enemy_middle_2{
+    background-image: url("./material/CloverAssets/enemy/a-01b.png");
+    background-repeat: no-repeat;
+    background-position: contain;
+    background-size: 100px;
+    width: 100px;
+    height: 133px;
+}
+.enemy_boss{
+    background-image: url("./material/CloverAssets/enemy/mini-boss00.png");
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-size: 176px;
+    width: 150px;
+    height: 134px;
+}
+
